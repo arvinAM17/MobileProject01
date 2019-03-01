@@ -14,6 +14,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/get"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,6 +22,7 @@
             android:text="@string/get_button" />
 
         <Button
+            android:id="@+id/clear"
             style="@android:style/Widget.DeviceDefault.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,6 +30,7 @@
             android:text="@string/clear_button" />
 
         <Button
+            android:id="@+id/refresh"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,15 +39,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/numbers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/refresh_button" />
     </LinearLayout>
 
 

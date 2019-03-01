@@ -3,6 +3,7 @@ package com.example.mobileproject01;
 import android.content.Context;
 import android.os.SystemClock;
 import android.util.Log;
+import android.widget.LinearLayout;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,9 +21,23 @@ public class StorageManager {
 
     Storage storage = new Storage("StorageManager Thread");
     Context context;
+    OutputStreamWriter outputStreamWriter;
+    OnComplete onComplete;
+    MessageController messageController;
+    LinearLayout linearLayout;
 
-    StorageManager(Context context){
+    StorageManager(Context context, OnComplete onComplete , MessageController messageController, LinearLayout linearLayout){
         this.context = context;
+        this.onComplete = onComplete;
+        this.messageController=messageController;
+        this.linearLayout=linearLayout;
+
+        try {
+            outputStreamWriter = new OutputStreamWriter(context.openFileOutput("loadNumber.txt", Context.MODE_PRIVATE));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
     void save(final int n){
 
@@ -32,7 +47,7 @@ public class StorageManager {
             public void run() {
 
                 try {
-                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("loadNumber.txt", Context.MODE_PRIVATE));
+
 
                     if(n==0)
                         outputStreamWriter.write("");
@@ -83,6 +98,7 @@ public class StorageManager {
                     }
                     else{
                         int n = Integer.parseInt(ret);
+
                         for (int i = 1; i <= n; i++)
                             loadArr.add(Integer.valueOf(i));
                     }
@@ -96,10 +112,11 @@ public class StorageManager {
                 }
 
 
-
+                onComplete.show(messageController,linearLayout);
 
             }
         });
+
 
         return loadArr;
     }
