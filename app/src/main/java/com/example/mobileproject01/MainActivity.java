@@ -1,6 +1,7 @@
 package com.example.mobileproject01;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -15,16 +16,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.numbers);
-        ArrayList<Integer> arr = new ArrayList<Integer>();
-        for (int i = 1; i <= 10; i++)
-            arr.add(Integer.valueOf(i));
-        for (int i = 0; i < 8; i++) {
-            TextView textView = new TextView(this);
-            textView.setText(i + ". " + arr.get(i).toString());
-            linearLayout.addView(textView);
+        ArrayList<Integer> arr;
+
+        StorageManager storageManager = new StorageManager(this);
+
+        arr= storageManager.load();
+        SystemClock.sleep(300);
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println(arr.get(i));
         }
 
-//        StorageManager storageManager = new StorageManager();
-//        storageManager.save(10);
     }
 }

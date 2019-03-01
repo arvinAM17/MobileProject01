@@ -6,7 +6,7 @@ public class Message {
     ArrayList<Integer> messages;
 
     public Message() {
-        this.messages = new ArrayList<>();
+        this.messages = new ArrayList<Integer>();
     }
 
     public Message(ArrayList<Integer> messages) {

@@ -39,9 +39,9 @@ public class Cloud extends Thread {
         }
     }
 
-    public void postRunnable(Runnable runnable) {
-        postRunnable(runnable, 0);
-    }
+//    public void postRunnable(Runnable runnable) {
+//        postRunnable(runnable, 0);
+//    }
 
     public void postRunnable(Runnable runnable, long delay) {
         try {
@@ -82,5 +82,6 @@ public class Cloud extends Thread {
         };
         syncLatch.countDown();
         Looper.loop();
+
     }
 }
