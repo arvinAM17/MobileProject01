@@ -37,7 +37,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/numbers"
+        android:id="@+id/numbers1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
