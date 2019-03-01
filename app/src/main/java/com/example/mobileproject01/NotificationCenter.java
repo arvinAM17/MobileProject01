@@ -8,12 +8,12 @@ public class NotificationCenter {
 
     public NotificationCenter() {
         message = new Message();
-        observers = new ArrayList<>();
+        observers = new ArrayList<Observer>();
     }
 
     public NotificationCenter(Message message) {
         this.message = message;
-        observers = new ArrayList<>();
+        observers = new ArrayList<Observer>();
     }
 
     public void addObserver(Observer observer) {

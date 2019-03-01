@@ -1,6 +1,7 @@
 package com.example.mobileproject01;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +25,16 @@ public class MainActivity extends AppCompatActivity {
 //        textView.setText(arr.get(0));
 //        linearLayout.addView(textView);
         setContentView(R.layout.activity_main);
-        Log.v("array", "onCreate: Created.");
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.numbers);
+        ArrayList<Integer> arr;
+
+        StorageManager storageManager = new StorageManager(this);
+
+        arr= storageManager.load();
+        SystemClock.sleep(300);
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println(arr.get(i));
+        }
 
 //        StorageManager storageManager = new StorageManager();
 //        storageManager.save(10);
