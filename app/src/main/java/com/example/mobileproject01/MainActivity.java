@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements OnComplete{
         Button clear = (Button) findViewById(R.id.clear);
         Button get = (Button) findViewById(R.id.get);
         Button refresh = (Button) findViewById(R.id.refresh);
-        final MessageController messageController = new MessageController(this,linearLayout,this);
+        final MessageController messageController = MessageController.getInstance(this,linearLayout,this);
 
 
 //        clear.setOnClickListener(new View.OnClickListener(){

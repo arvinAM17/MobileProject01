@@ -1,13 +1,7 @@
 package com.example.mobileproject01;
 
-import android.content.Context;
-import android.util.Log;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ConnectionManager {
@@ -20,7 +14,7 @@ public class ConnectionManager {
         this.messageController=messageController;
         this.linearLayout=linearLayout;
     }
-    Storage cloud = new Storage("ConnectionManager Thread");
+    Worker cloud = new Worker("ConnectionManager Thread");
 
 
     ArrayList<Integer> load(final int n){

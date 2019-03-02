@@ -7,13 +7,13 @@ import android.util.Log;
 
 import java.util.concurrent.CountDownLatch;
 
-public class Storage extends Thread {
+public class Worker extends Thread {
 
 
     private volatile Handler handler = null;
     private CountDownLatch syncLatch = new CountDownLatch(1);
 
-    public Storage(final String threadName) {
+    public Worker(final String threadName) {
         setName(threadName);
         start();
     }
@@ -78,7 +78,7 @@ public class Storage extends Thread {
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                Storage.this.handleMessage(msg);
+                Worker.this.handleMessage(msg);
             }
         };
         syncLatch.countDown();

@@ -1,32 +1,37 @@
 package com.example.mobileproject01;
 
 import android.content.Context;
-import android.os.SystemClock;
 import android.util.Log;
 import android.widget.LinearLayout;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class StorageManager {
 
-    Storage storage = new Storage("StorageManager Thread");
+    private static StorageManager SINGLE_INSTANCE = null;
+    public static StorageManager getInstance(Context context, OnComplete onComplete , MessageController messageController, LinearLayout linearLayout) {
+        if (SINGLE_INSTANCE == null) {
+            synchronized(StorageManager.class) {
+                SINGLE_INSTANCE = new StorageManager(context,onComplete,messageController,linearLayout);
+            }
+        }
+        return SINGLE_INSTANCE;
+    }
+
+    Worker storage = new Worker("StorageManager Thread");
     Context context;
     OutputStreamWriter outputStreamWriter;
     OnComplete onComplete;
     MessageController messageController;
     LinearLayout linearLayout;
 
-    StorageManager(Context context, OnComplete onComplete , MessageController messageController, LinearLayout linearLayout){
+    private StorageManager(Context context, OnComplete onComplete , MessageController messageController, LinearLayout linearLayout){
         this.context = context;
         this.onComplete = onComplete;
         this.messageController=messageController;
