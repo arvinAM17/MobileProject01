@@ -24,18 +24,17 @@ public class MainActivity extends AppCompatActivity implements OnComplete{
         Button clear = (Button) findViewById(R.id.clear);
         Button get = (Button) findViewById(R.id.get);
         Button refresh = (Button) findViewById(R.id.refresh);
-        final MessageController messageController = MessageController.getInstance(this,linearLayout,this);
+        final MessageController messageController = MessageController.getInstance(MainActivity.this,linearLayout,this);
 
 
-//        clear.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-//                messageController.clear();
-//                SystemClock.sleep(400);
-//                linearLayout.removeAllViews();
-//            }
-//        });
+        clear.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                messageController.clear();
+                linearLayout.removeAllViews();
+            }
+        });
 
 
 

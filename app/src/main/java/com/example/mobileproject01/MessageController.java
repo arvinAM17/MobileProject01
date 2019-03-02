@@ -1,6 +1,7 @@
 package com.example.mobileproject01;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -22,19 +23,23 @@ public class MessageController {
     Context context;
     LinearLayout linearLayout;
     OnComplete onComplete;
+    ArrayList<Integer> array = new ArrayList<Integer>();
+    ConnectionManager connectionManager;
+    StorageManager storageManager;
 
     private MessageController(Context context, LinearLayout linearLayout,OnComplete onComplete){
         this.context = context;
         this.linearLayout = linearLayout;
         this.onComplete = onComplete;
+        storageManager =StorageManager.getInstance(context,onComplete,this,linearLayout);
+        connectionManager = new ConnectionManager(onComplete,this,linearLayout);
     }
-    ArrayList<Integer> array = new ArrayList<Integer>();
-    ConnectionManager connectionManager = new ConnectionManager(onComplete,this,linearLayout);
-    StorageManager storageManager =StorageManager.getInstance(context,onComplete,this,linearLayout);
+
 
     void fetch(Boolean fromCache) {
         if (fromCache){
             array.addAll(storageManager.load());
+            storageManager.save(array.size());
         }
 
         else {

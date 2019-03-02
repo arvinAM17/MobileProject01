@@ -5,7 +5,9 @@ import android.util.Log;
 import android.widget.LinearLayout;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,6 +32,7 @@ public class StorageManager {
     OnComplete onComplete;
     MessageController messageController;
     LinearLayout linearLayout;
+    FileOutputStream fileOutputStream;
 
     private StorageManager(Context context, OnComplete onComplete , MessageController messageController, LinearLayout linearLayout){
         this.context = context;
@@ -37,9 +40,15 @@ public class StorageManager {
         this.messageController=messageController;
         this.linearLayout=linearLayout;
 
+
+
+
+
         try {
-            outputStreamWriter = new OutputStreamWriter(context.openFileOutput("loadNumber.txt", Context.MODE_PRIVATE));
-        } catch (FileNotFoundException e) {
+//            outputStreamWriter = new OutputStreamWriter(context.openFileOutput("loadNumber.txt", Context.MODE_PRIVATE));
+            fileOutputStream = context.openFileOutput("loadNumber.txt",context.MODE_PRIVATE);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -51,20 +60,29 @@ public class StorageManager {
             @Override
             public void run() {
 
+//                try {
+//
+//
+//                    if(n==0)
+//                        outputStreamWriter.write("");
+//                    else
+//                        outputStreamWriter.write(Integer.toString(n));
+//                    outputStreamWriter.close();
+//                }
+//                catch (IOException e) {
+//                    Log.e("Exception", "File write failed: " + e.toString());
+//                }
+
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
                 try {
-
-
                     if(n==0)
-                        outputStreamWriter.write("");
+                        writer.write("");
                     else
-                        outputStreamWriter.write(Integer.toString(n));
-                    outputStreamWriter.close();
+                        writer.write(Integer.toString(n));
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                catch (IOException e) {
-                    Log.e("Exception", "File write failed: " + e.toString());
-                }
-
-
 
 
             }
@@ -96,6 +114,8 @@ public class StorageManager {
                         inputStream.close();
                         ret = stringBuilder.toString();
                     }
+
+//                    System.out.println("in to fileeee "+ret);
 
                     if (ret == ""){
                         for (int i = 1; i <= 10; i++)
