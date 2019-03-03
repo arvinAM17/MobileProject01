@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
     @Override
     public void update() {
 
-        System.out.println("main act is updatedddd data loadeddd--- " + messageController.array.size());
+//        System.out.println("main act is updatedddd data loadeddd--- " + messageController.array.size());
         linearLayout.removeAllViews();
         for (int i = 0; i < messageController.array.size(); i++) {
             TextView tv = new TextView(getApplicationContext()); // Prepare textview object programmatically

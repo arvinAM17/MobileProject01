@@ -31,24 +31,36 @@ public class StorageManager {
     Worker storage = new Worker("StorageManager Thread");
     Context context;
     OutputStreamWriter outputStreamWriter;
-    FileOutputStream fileOutputStream;
+    InputStream inputStream;
 
     private StorageManager(Context context){
         this.context = context;
 
-
-
-
-
         try {
-            fileOutputStream = context.openFileOutput("loadNumber.txt",context.MODE_PRIVATE);
+
+//            outputStreamWriter.write("shiiiit");
+//            outputStreamWriter.close();
+            inputStream = context.openFileInput("loadNumber.txt");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
+
+
+
+
+
+
+
     void save(final int n){
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+        try {
+            outputStreamWriter = new OutputStreamWriter(context.openFileOutput("loadNumber.txt", Context.MODE_PRIVATE));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
         storage.postRunnable(new Runnable() {
@@ -56,13 +68,25 @@ public class StorageManager {
             public void run() {
 
 
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
                 try {
-                    if(n==0)
-                        writer.write("");
+                    if(n==0){
+//                        inputStream = context.openFileInput("loadNumber.txt");
+//                        outputStreamWriter.write("");
+                    }
+
+
+
+
+                    //TODO 10 ya hichiiiii
                     else
-                        writer.write(Integer.toString(n));
-//                    writer.close();
+                        outputStreamWriter.write(Integer.toString(n));
+
+                    countDownLatch.countDown();
+
+
+
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -70,6 +94,21 @@ public class StorageManager {
 
             }
         });
+
+
+
+
+
+        try {
+            try {
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            outputStreamWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
     ArrayList<Integer> load(){
@@ -83,7 +122,6 @@ public class StorageManager {
                 String ret = "";
 
                 try {
-                    InputStream inputStream = context.openFileInput("loadNumber.txt");
 
                     if ( inputStream != null ) {
                         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -95,11 +133,9 @@ public class StorageManager {
                             stringBuilder.append(receiveString);
                         }
 
-                        inputStream.close();
+
                         ret = stringBuilder.toString();
                     }
-
-//                    System.out.println("in to fileeee "+ret);
 
                     if (ret == ""){
                         for (int i = 1; i <= 10; i++)
@@ -127,6 +163,13 @@ public class StorageManager {
         try {
             countDownLatch.await();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            inputStream.close();
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
