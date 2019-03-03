@@ -14,17 +14,23 @@ import java.io.FileNotFoundException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements OnComplete{
+public class MainActivity extends AppCompatActivity implements Observer{
+     LinearLayout linearLayout;
+     MessageController messageController;
+    NotificationCenter notificationCenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.numbers);
+        linearLayout = (LinearLayout) findViewById(R.id.numbers);
         Button clear = (Button) findViewById(R.id.clear);
         Button get = (Button) findViewById(R.id.get);
         Button refresh = (Button) findViewById(R.id.refresh);
-        final MessageController messageController = MessageController.getInstance(MainActivity.this,linearLayout,this);
+
+        notificationCenter = new NotificationCenter();
+        messageController = MessageController.getInstance(MainActivity.this,notificationCenter);
+        notificationCenter.register(this);
 
 
         clear.setOnClickListener(new View.OnClickListener(){
@@ -60,50 +66,29 @@ public class MainActivity extends AppCompatActivity implements OnComplete{
 
 
 
+    }
 
 
-//        for (int i = 0; i <10 ; i++) {
-//            arr.add(Integer.valueOf(i));
-//        }
-//
 
-//
-//        StorageManager storageManager = new StorageManager(this);
-//        ArrayList arr;
-//
-//
-//        arr= storageManager.load();
-//        SystemClock.sleep(300);
-//        for (int i = 0; i < arr.size(); i++) {
-//            System.out.println(arr.get(i));
-//        }
-//        storageManager.save(15);
-//        SystemClock.sleep(300);
-//        arr=storageManager.load();
-//        SystemClock.sleep(300);
-//
-//        for (int i = 0; i < arr.size(); i++) {
-//            System.out.println(arr.get(i));
-//        }
-//        storageManager.save(15);
 
-//        StorageManager storageManager = new StorageManager();
-//        storageManager.save(10);
+    @Override
+    public void update() {
+
+        System.out.println("main act is updatedddd data loadeddd--- " + messageController.array.size());
+        linearLayout.removeAllViews();
+        for (int i = 0; i < messageController.array.size(); i++) {
+            TextView tv = new TextView(getApplicationContext()); // Prepare textview object programmatically
+//            System.out.println("main arr = "+ messageController.array.get(i));
+            tv.setText(Integer.toString(messageController.array.get(i)));
+            tv.setId(i);
+            linearLayout.addView(tv); // Add to ViewGroup using this method
+        }
     }
 
     @Override
-    public void show(final MessageController messageController, final LinearLayout linearLayout) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < messageController.array.size(); i++) {
-                    TextView tv = new TextView(getApplicationContext()); // Prepare textview object programmatically
-                    tv.setText(Integer.toString(messageController.array.get(i)));
-                    tv.setId(i);
-                    linearLayout.addView(tv); // Add to your ViewGroup using this method
-                }
-            }
-        });
+    protected void onDestroy() {
+        super.onDestroy();
+        notificationCenter.unregister(this);
 
     }
 }
