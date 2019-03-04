@@ -32,6 +32,8 @@ public class StorageManager {
     Context context;
     OutputStreamWriter outputStreamWriter;
     InputStream inputStream;
+    InputStreamReader inputStreamReader;
+    BufferedReader bufferedReader;
 
     private StorageManager(Context context){
         this.context = context;
@@ -40,7 +42,7 @@ public class StorageManager {
 
 //            outputStreamWriter.write("shiiiit");
 //            outputStreamWriter.close();
-            inputStream = context.openFileInput("loadNumber.txt");
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,10 +77,6 @@ public class StorageManager {
 //                        outputStreamWriter.write("");
                     }
 
-
-
-
-                    //TODO 10 ya hichiiiii
                     else
                         outputStreamWriter.write(Integer.toString(n));
 
@@ -113,6 +111,14 @@ public class StorageManager {
     }
     ArrayList<Integer> load(){
         final CountDownLatch countDownLatch = new CountDownLatch(1);
+        try {
+            inputStream = context.openFileInput("loadNumber.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        inputStreamReader = new InputStreamReader(inputStream);
+        bufferedReader = new BufferedReader(inputStreamReader);
+        loadArr.clear();
 
 
         storage.postRunnable(new Runnable() {
@@ -124,8 +130,7 @@ public class StorageManager {
                 try {
 
                     if ( inputStream != null ) {
-                        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
                         String receiveString = "";
                         StringBuilder stringBuilder = new StringBuilder();
 
@@ -134,14 +139,24 @@ public class StorageManager {
                         }
 
 
+
+
                         ret = stringBuilder.toString();
+
+
+
+
+
                     }
+
+
 
                     if (ret == ""){
                         for (int i = 1; i <= 10; i++)
                             loadArr.add(Integer.valueOf(i));
                     }
                     else{
+
                         int n = Integer.parseInt(ret);
 
                         for (int i = 1; i <= n; i++)
@@ -168,6 +183,9 @@ public class StorageManager {
 
         try {
             inputStream.close();
+            inputStreamReader.close();
+            bufferedReader.close();
+
 
         } catch (IOException e) {
             e.printStackTrace();

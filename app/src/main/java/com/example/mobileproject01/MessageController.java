@@ -43,20 +43,17 @@ public class MessageController {
 
     void fetch(Boolean fromCache) {
         if (fromCache) {
-//            array.clear();
+            array.clear();
             array.addAll(storageManager.load());
 
             notificationCenter.dataLoaded();
-
             storageManager.save(array.size());
-            System.out.println("int too file bade load" +readFromFile(context));
         } else {
             array.addAll(connectionManager.load(array.size()));
 
 
             notificationCenter.dataLoaded();
             storageManager.save(array.size());
-            System.out.println("int too file bade load" +readFromFile(context));
         }
 
     }
