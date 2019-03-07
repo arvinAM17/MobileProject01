@@ -9,14 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements Observer{
-     LinearLayout linearLayout;
-     MessageController messageController;
+public class MainActivity extends AppCompatActivity implements Observer {
+    LinearLayout linearLayout;
+    MessageController messageController;
     NotificationCenter notificationCenter;
 
     @Override
@@ -29,11 +30,11 @@ public class MainActivity extends AppCompatActivity implements Observer{
         Button refresh = (Button) findViewById(R.id.refresh);
 
         notificationCenter = new NotificationCenter();
-        messageController = MessageController.getInstance(MainActivity.this,notificationCenter);
+        messageController = MessageController.getInstance(MainActivity.this, notificationCenter);
         notificationCenter.register(this);
 
 
-        clear.setOnClickListener(new View.OnClickListener(){
+        clear.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -43,8 +44,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
         });
 
 
-
-        get.setOnClickListener(new View.OnClickListener(){
+        get.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
             }
         });
 
-        refresh.setOnClickListener(new View.OnClickListener(){
+        refresh.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -64,11 +64,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
         });
 
 
-
-
     }
-
-
 
 
     @Override
@@ -86,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        System.out.println("on destroy" + "im dieiiiiinggggg");
         notificationCenter.unregister(this);
 
     }

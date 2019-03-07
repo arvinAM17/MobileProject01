@@ -43,11 +43,11 @@ public class MessageController {
 
     void fetch(Boolean fromCache) {
         if (fromCache) {
-            array.clear();
-            array.addAll(storageManager.load());
+//            array.clear();
+            array.addAll(storageManager.load(array.size()));
 
             notificationCenter.dataLoaded();
-            storageManager.save(array.size());
+//            storageManager.save(array.size());
         } else {
             array.addAll(connectionManager.load(array.size()));
 
@@ -60,7 +60,6 @@ public class MessageController {
 
     void clear() {
         array.clear();
-        storageManager.save(array.size());
     }
 
 

@@ -16,12 +16,13 @@ import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 public class StorageManager {
-    ArrayList<Integer> loadArr=new ArrayList<Integer>();
+    ArrayList<Integer> loadArr = new ArrayList<Integer>();
 
     private static StorageManager SINGLE_INSTANCE = null;
+
     public static StorageManager getInstance(Context context) {
         if (SINGLE_INSTANCE == null) {
-            synchronized(StorageManager.class) {
+            synchronized (StorageManager.class) {
                 SINGLE_INSTANCE = new StorageManager(context);
             }
         }
@@ -35,7 +36,7 @@ public class StorageManager {
     InputStreamReader inputStreamReader;
     BufferedReader bufferedReader;
 
-    private StorageManager(Context context){
+    private StorageManager(Context context) {
         this.context = context;
 
         try {
@@ -51,12 +52,7 @@ public class StorageManager {
     }
 
 
-
-
-
-
-
-    void save(final int n){
+    void save(final int n) {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         try {
             outputStreamWriter = new OutputStreamWriter(context.openFileOutput("loadNumber.txt", Context.MODE_PRIVATE));
@@ -70,19 +66,14 @@ public class StorageManager {
             public void run() {
 
 
-
                 try {
-                    if(n==0){
+                    if (n == 0) {
 //                        inputStream = context.openFileInput("loadNumber.txt");
 //                        outputStreamWriter.write("");
-                    }
-
-                    else
+                    } else
                         outputStreamWriter.write(Integer.toString(n));
 
                     countDownLatch.countDown();
-
-
 
 
                 } catch (IOException e) {
@@ -92,9 +83,6 @@ public class StorageManager {
 
             }
         });
-
-
-
 
 
         try {
@@ -109,7 +97,8 @@ public class StorageManager {
         }
 
     }
-    ArrayList<Integer> load(){
+
+    ArrayList<Integer> load(final int n) {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         try {
             inputStream = context.openFileInput("loadNumber.txt");
@@ -129,40 +118,30 @@ public class StorageManager {
 
                 try {
 
-                    if ( inputStream != null ) {
+                    if (inputStream != null) {
 
                         String receiveString = "";
                         StringBuilder stringBuilder = new StringBuilder();
 
-                        while ( (receiveString = bufferedReader.readLine()) != null ) {
+                        while ((receiveString = bufferedReader.readLine()) != null) {
                             stringBuilder.append(receiveString);
                         }
-
-
 
 
                         ret = stringBuilder.toString();
 
 
-
-
-
                     }
 
 
+                    if (!ret.equals("")) {
 
-                    if (ret == ""){
-                        for (int i = 1; i <= 10; i++)
-                            loadArr.add(Integer.valueOf(i));
+                        int m = Integer.parseInt(ret);
+
+                        if (m > n)
+                            for (int i = n + 1; i <= n + 10; i++)
+                                loadArr.add(Integer.valueOf(i));
                     }
-                    else{
-
-                        int n = Integer.parseInt(ret);
-
-                        for (int i = 1; i <= n; i++)
-                            loadArr.add(Integer.valueOf(i));
-                    }
-
 
 
                 } catch (FileNotFoundException e) {
