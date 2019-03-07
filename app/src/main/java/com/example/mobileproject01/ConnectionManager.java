@@ -33,7 +33,7 @@ public class ConnectionManager {
             }
 
         };
-        cloud.postRunnable(task, 5000);
+        cloud.postRunnable(task, 100);
         try {
             countDownLatch.await();
         } catch (InterruptedException e) {

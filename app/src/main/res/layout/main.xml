@@ -14,6 +14,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/get"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,14 +22,16 @@
             android:text="@string/get_button" />
 
         <Button
+            android:id="@+id/clear"
+
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:text="@string/clear_button"
-            tools:ignore="NewApi" />
+            android:text="@string/clear_button" />
 
         <Button
+            android:id="@+id/refresh"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,14 +39,21 @@
             android:text="@string/refresh_button" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/numbers1"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="65dp"
-        android:orientation="vertical">
+        android:layout_marginBottom="40dp"
+        >
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="65dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

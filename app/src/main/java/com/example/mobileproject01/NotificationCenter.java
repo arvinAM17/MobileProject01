@@ -19,6 +19,7 @@ public class NotificationCenter {
     }
 
     public void dataLoaded() {
+
         this.updateObservers();
     }
 
@@ -27,5 +28,9 @@ public class NotificationCenter {
              this.observers) {
             o.update();
         }
+    }
+
+    public ArrayList<Observer> getObservers() {
+        return observers;
     }
 }
