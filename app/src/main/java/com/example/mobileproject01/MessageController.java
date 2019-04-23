@@ -3,6 +3,7 @@ package com.example.mobileproject01;
 import android.content.Context;
 import android.os.SystemClock;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
 import java.io.BufferedReader;
@@ -29,6 +30,8 @@ public class MessageController {
 
 
     Context context;
+    ArrayList<Comment> comments = new ArrayList<Comment>();
+    ArrayList<Post> posts = new ArrayList<Post>();
     ArrayList<Integer> array = new ArrayList<Integer>();
     ConnectionManager connectionManager;
     StorageManager storageManager;
@@ -49,6 +52,23 @@ public class MessageController {
 
         } else {
             array.addAll(connectionManager.load(array.size()));
+
+
+
+
+
+
+
+            posts.addAll(connectionManager.loadPost);
+
+
+
+
+
+
+
+
+
 
 
             notificationCenter.dataLoaded();

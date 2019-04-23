@@ -2,6 +2,7 @@ package com.example.mobileproject01;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +32,23 @@ public class MainActivity extends AppCompatActivity implements Observer {
         Button get = (Button) findViewById(R.id.get);
         Button refresh = (Button) findViewById(R.id.refresh);
         notificationCenter.register(MainActivity.this);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         notificationCenter.dataLoaded();
 
@@ -72,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     @Override
     public void update() {
+        System.out.println(messageController.connectionManager.lostPosts().get(0));
 
         linearLayout.removeAllViews();
         for (int i = 0; i < messageController.array.size(); i++) {
