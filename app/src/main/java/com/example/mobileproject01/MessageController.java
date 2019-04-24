@@ -52,25 +52,6 @@ public class MessageController {
 
         } else {
             array.addAll(connectionManager.load(array.size()));
-
-
-
-
-
-
-
-            posts.addAll(connectionManager.loadPost);
-
-
-
-
-
-
-
-
-
-
-
             notificationCenter.dataLoaded();
             storageManager.save(array.size());
         }

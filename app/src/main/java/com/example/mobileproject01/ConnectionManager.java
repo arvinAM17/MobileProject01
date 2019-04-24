@@ -59,11 +59,7 @@ public class ConnectionManager {
 
     }
 
-    ArrayList<Post> lostPosts() {
-        final URL[] url = new URL[1];
-        final URLConnection[] urlConnection = new URLConnection[1];
-        final BufferedReader[] bufferedReader = new BufferedReader[1];
-        final InputStreamReader[] inputStreamReader = new InputStreamReader[1];
+    ArrayList<Post> loadPosts() {
 
 
         final CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -92,14 +88,13 @@ public class ConnectionManager {
                     post.setId( Integer.parseInt(temp[1].split(Pattern.quote(": "))[1]));
 
                     String str = temp[2].split(Pattern.quote(": \""))[1];
-//                    str = str.split()
+                    str = str.split("\"")[0];
                     post.setTitle(str);
 
 
                     str = temp[3].split(Pattern.quote(": \""))[1];
-                    str.replace('\"',' ');
+                    str = str.split("\"")[0];
                     post.setBody(str);
-                    System.out.println(post.getTitle());
                     loadPost.add(post);
                     post = new Post();
                 }
@@ -117,15 +112,80 @@ public class ConnectionManager {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if (bufferedReader[0] != null) {
-            try {
-                bufferedReader[0].close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
         return loadPost;
     }
+
+
+
+
+    ArrayList<Comment> loadComments(int postId) {
+
+
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                loadCom.clear();
+                String content = null;
+                String url = "https://jsonplaceholder.typicode.com/comments?postId=" + Integer.toString(postId);
+
+                try {
+                    content = readStringFromURL(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                String[] comments = content.split(Pattern.quote("},"));
+
+
+                Comment comment = new Comment();
+
+                for (int i = 0; i < comments.length; i++) {
+                    String[] temp = comments[i].split(Pattern.quote(","));
+                    comment.setPostId( Integer.parseInt(temp[0].split(Pattern.quote(": "))[1]));
+
+                    comment.setId( Integer.parseInt(temp[1].split(Pattern.quote(": "))[1]));
+
+                    String str = temp[2].split(Pattern.quote(": \""))[1];
+                    str = str.split("\"")[0];
+                    comment.setName(str);
+
+
+                    str = temp[3].split(Pattern.quote(": \""))[1];
+                    str = str.split("\"")[0];
+                    comment.setEmail(str);
+
+                    str = temp[4].split(Pattern.quote(": \""))[1];
+                    str = str.split("\"")[0];
+                    comment.setBody(str);
+
+                    loadCom.add(comment);
+                    comment = new Comment();
+                }
+
+
+                countDownLatch.countDown();
+
+
+            }
+
+        };
+        cloud.postRunnable(task);
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return loadCom;
+    }
+
+
+
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     @Override
     public void update() {
-        System.out.println(messageController.connectionManager.lostPosts().get(0));
 
         linearLayout.removeAllViews();
         for (int i = 0; i < messageController.array.size(); i++) {
