@@ -6,54 +6,17 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/change_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/get"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:text="@string/get_button" />
-
-        <Button
-            android:id="@+id/clear"
-
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:text="@string/clear_button" />
-
-        <Button
-            android:id="@+id/refresh"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:text="@string/refresh_button" />
-    </LinearLayout>
-
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        >
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 
-        <LinearLayout
-            android:id="@+id/numbers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="65dp"
-            android:orientation="vertical">
-
-        </LinearLayout>
-    </ScrollView>
 
 
 </LinearLayout>
