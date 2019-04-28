@@ -33,23 +33,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
         Button refresh = (Button) findViewById(R.id.refresh);
         notificationCenter.register(MainActivity.this);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         notificationCenter.dataLoaded();
 
 
@@ -78,9 +61,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
             @Override
             public void onClick(View v) {
                 messageController.fetch(true,notificationCenter);
-
-
-
             }
         });
 
