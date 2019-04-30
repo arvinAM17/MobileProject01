@@ -74,9 +74,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return posts;
     }
 
-    public ArrayList<Comment> getComments() {
+    public ArrayList<Comment> getComments(int id) {
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor result = database.rawQuery("select * from " + COMMENT_TABLE_NAME + ";", null);
+        Cursor result = database.rawQuery("select * from " + COMMENT_TABLE_NAME + "where postId = "+id+";", null);
         ArrayList<Comment> comments = new ArrayList<Comment>();
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             Comment comment = new Comment();

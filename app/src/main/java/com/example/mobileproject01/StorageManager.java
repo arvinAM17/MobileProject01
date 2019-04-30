@@ -16,9 +16,11 @@ import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 public class StorageManager {
-    ArrayList<Integer> loadArr = new ArrayList<Integer>();
 
     private static StorageManager SINGLE_INSTANCE = null;
+    public ArrayList<Post> posts = new ArrayList<Post>();
+    public ArrayList<Comment> comments = new ArrayList<Comment>();
+    public DatabaseManager dbManager;
 
     public static StorageManager getInstance(Context context) {
         if (SINGLE_INSTANCE == null) {
@@ -38,6 +40,7 @@ public class StorageManager {
 
     private StorageManager(Context context) {
         this.context = context;
+        dbManager = new DatabaseManager(this.context);
 
         try {
 
@@ -52,103 +55,53 @@ public class StorageManager {
     }
 
 
-    void save(final int n) {
+    void savePosts(final ArrayList<Post> posts) {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
-        try {
-            outputStreamWriter = new OutputStreamWriter(context.openFileOutput("loadNumber.txt", Context.MODE_PRIVATE));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
 
         storage.postRunnable(new Runnable() {
             @Override
             public void run() {
-
-
-                try {
-                    if (n == 0) {
-//                        inputStream = context.openFileInput("loadNumber.txt");
-//                        outputStreamWriter.write("");
-                    } else
-                        outputStreamWriter.write(Integer.toString(n));
-
-                    countDownLatch.countDown();
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
+                dbManager.insertPosts(posts);
             }
         });
 
 
         try {
-            try {
-                countDownLatch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            outputStreamWriter.close();
-        } catch (IOException e) {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
 
     }
 
-    ArrayList<Integer> load(final int n) {
+    void saveComments(final ArrayList<Comment> comments) {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
-        try {
-            inputStream = context.openFileInput("loadNumber.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        inputStreamReader = new InputStreamReader(inputStream);
-        bufferedReader = new BufferedReader(inputStreamReader);
-        loadArr.clear();
-
 
         storage.postRunnable(new Runnable() {
             @Override
             public void run() {
-
-                String ret = "";
-
-                try {
-
-                    if (inputStream != null) {
-
-                        String receiveString = "";
-                        StringBuilder stringBuilder = new StringBuilder();
-
-                        while ((receiveString = bufferedReader.readLine()) != null) {
-                            stringBuilder.append(receiveString);
-                        }
+                dbManager.insertComments(comments);
+            }
+        });
 
 
-                        ret = stringBuilder.toString();
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
-                    }
+    }
 
+    ArrayList<Post> loadPosts() {
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-                    if (!ret.equals("")) {
-
-                        int m = Integer.parseInt(ret);
-
-                        if (m > n)
-                            for (int i = n + 1; i <= n + 10; i++)
-                                loadArr.add(Integer.valueOf(i));
-                    }
-
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        storage.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                posts = dbManager.getPosts();
                 countDownLatch.countDown();
 
             }
@@ -160,16 +113,27 @@ public class StorageManager {
             e.printStackTrace();
         }
 
+        return posts;
+    }
+
+    ArrayList<Comment> loadComment(final int id) {
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+        storage.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                comments = dbManager.getComments(id);
+                countDownLatch.countDown();
+
+            }
+        });
+
         try {
-            inputStream.close();
-            inputStreamReader.close();
-            bufferedReader.close();
-
-
-        } catch (IOException e) {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return loadArr;
+        return comments;
     }
 }
