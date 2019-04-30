@@ -1,28 +1,16 @@
 package com.example.mobileproject01;
 
 
-import android.content.Context;
-import android.content.res.Configuration;
-import android.os.StrictMode;
-import android.os.SystemClock;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.FileNotFoundException;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements Observer {
     LinearLayout linearLayout;
@@ -66,12 +54,19 @@ public class MainActivity extends AppCompatActivity implements Observer {
     @Override
     public void update() {
 
-        linearLayout.removeAllViews();
-        for (int i = 0; i < messageController.array.size(); i++) {
-            TextView tv = new TextView(getApplicationContext()); // Prepare textview object programmatically
-            tv.setText(Integer.toString(messageController.array.get(i)));
-            tv.setId(i);
-            recyclerView.addView(tv); // Add to ViewGroup using this method
+        messageController.posts.addAll(messageController.connectionManager.loadPosts());
+        recyclerView.removeAllViews();
+        for (int i = 0; i < messageController.posts.size(); i++) {
+            RelativeLayout rel = new RelativeLayout(getApplicationContext());
+            TextView title = new TextView(getApplicationContext()); // Prepare textview object programmatically
+            title.setText(messageController.posts.get(i).getTitle());
+            title.setId(2 * i);
+            rel.addView(title);
+            TextView body = new TextView(getApplicationContext());
+            body.setText(messageController.posts.get(i).body);
+            body.setId(2 * i + 1);
+            rel.addView(body);
+            recyclerView.addView(rel); // Add to ViewGroup using this method
         }
     }
 
