@@ -44,20 +44,6 @@ public class MessageController {
     }
 
 
-    void fetch(Boolean fromCache,NotificationCenter notificationCenter) {
-
-        if (fromCache) {
-            array.addAll(storageManager.load(array.size()));
-            notificationCenter.dataLoaded();
-
-        } else {
-            array.addAll(connectionManager.load(array.size()));
-            notificationCenter.dataLoaded();
-            storageManager.save(array.size());
-        }
-
-    }
-
     void clear() {
         array.clear();
     }
