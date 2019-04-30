@@ -31,6 +31,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public void insertPosts(ArrayList<Post> posts) {
         SQLiteDatabase database = this.getWritableDatabase();
+        database.execSQL("delete from " + POST_TABLE_NAME + ";");
         ContentValues contentValues = new ContentValues();
         for (Post p:
              posts) {
@@ -46,6 +47,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public void insertComments(ArrayList<Comment> comments) {
         SQLiteDatabase database = this.getWritableDatabase();
+        database.execSQL("delete from " + COMMENT_TABLE_NAME + ";");
         ContentValues contentValues = new ContentValues();
         for (Comment c:
              comments) {
