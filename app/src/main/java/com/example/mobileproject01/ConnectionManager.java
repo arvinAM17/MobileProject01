@@ -119,7 +119,7 @@ public class ConnectionManager {
 
 
 
-    ArrayList<Comment> loadComments(int postId) {
+    ArrayList<Comment> loadComments(final int postId) {
 
 
         final CountDownLatch countDownLatch = new CountDownLatch(1);

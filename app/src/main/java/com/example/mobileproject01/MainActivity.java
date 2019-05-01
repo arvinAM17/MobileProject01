@@ -37,8 +37,14 @@ public class MainActivity extends AppCompatActivity implements Observer {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
         changeView = (Button) findViewById(R.id.change_view);
+
+
+
         messageController.posts.addAll(messageController.connectionManager.loadPosts());
-        mAdapter = new PostAdapter(getApplicationContext(), messageController.posts);
+
+
+
+        mAdapter = new PostAdapter(getApplicationContext(), messageController.posts,messageController);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler);
         dividerItem = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
         recyclerView.setAdapter(mAdapter);
@@ -58,6 +64,15 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 }
             }
         });
+
+//        for (int i = 0; i < messageController.posts.size(); i++) {
+//            recyclerView.getTouchables().get(i).setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v){
+//                    System.out.println("heloooooooo");
+//                }
+//            });
+//        }
 
         notificationCenter.register(MainActivity.this);
 

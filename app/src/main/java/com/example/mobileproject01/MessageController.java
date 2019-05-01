@@ -1,6 +1,8 @@
 package com.example.mobileproject01;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -32,7 +34,8 @@ public class MessageController {
     Context context;
     ArrayList<Comment> comments = new ArrayList<Comment>();
     ArrayList<Post> posts = new ArrayList<Post>();
-    ArrayList<Integer> array = new ArrayList<Integer>();
+
+
     ConnectionManager connectionManager;
     StorageManager storageManager;
 
@@ -41,11 +44,25 @@ public class MessageController {
         storageManager = StorageManager.getInstance(context);
         connectionManager = new ConnectionManager();
 
+
+
     }
 
 
-    void clear() {
-        array.clear();
+
+
+    public boolean isConnectedToNetwork(Context context) {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        boolean isConnected = false;
+        if (connectivityManager != null) {
+            NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+            isConnected = (activeNetwork != null) && (activeNetwork.isConnectedOrConnecting());
+        }
+
+        return isConnected;
     }
+
 
 }

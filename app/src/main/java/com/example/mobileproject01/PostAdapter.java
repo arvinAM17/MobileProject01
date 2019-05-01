@@ -13,10 +13,12 @@ import java.util.ArrayList;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private ArrayList<Post> posts;
     private Context context;
+    MessageController messageController;
 
-    public PostAdapter(Context context, ArrayList<Post> posts) {
+    public PostAdapter(Context context, ArrayList<Post> posts , MessageController messageController) {
         this.context = context;
         this.posts = posts;
+        this.messageController = messageController;
     }
 
     @NonNull
@@ -31,6 +33,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         Post post = posts.get(i);
         viewHolder.title.setText(post.getTitle());
         viewHolder.body.setText(post.getBody());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Comment> c = messageController.connectionManager.loadComments(post.id);
+            }
+        });
     }
 
     @Override
