@@ -5,4 +5,7 @@
     <string name="clear_button">Clear</string>
     <string name="back">Back</string>
     <string name="change_view">Change view</string>
+    <string name="arvin">Arvin Azarmina</string>
+    <string name="mahsa">Mahsa Sheikhi</string>
+    <string name="shayeste">Shayeste Arasti</string>
 </resources>

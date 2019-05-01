@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity implements Observer {
     private RecyclerView recyclerView;
@@ -19,6 +20,12 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     NotificationCenter notificationCenter = new NotificationCenter();
     MessageController messageController = MessageController.getInstance(MainActivity.this);
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
