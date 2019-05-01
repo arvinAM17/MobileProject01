@@ -1,6 +1,8 @@
 package com.example.mobileproject01;
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment implements Serializable {
     int postId;
     int id;
     String name;

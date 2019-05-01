@@ -42,6 +42,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 Intent intent = new Intent(con, CommentsActivity.class);
                 intent.putExtra("Id", post.getId());
                 intent.putExtra("Comments", c);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 con.startActivity(intent);
             }
         });
