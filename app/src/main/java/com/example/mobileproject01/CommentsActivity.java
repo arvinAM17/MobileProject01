@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static android.media.CamcorderProfile.get;
 
 public class CommentsActivity extends AppCompatActivity {
 
