@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MessageController {
 
@@ -34,6 +35,7 @@ public class MessageController {
     Context context;
     ArrayList<Comment> comments = new ArrayList<Comment>();
     ArrayList<Post> posts = new ArrayList<Post>();
+    int lastMinute;
 
 
     ConnectionManager connectionManager;
@@ -44,6 +46,35 @@ public class MessageController {
         storageManager = StorageManager.getInstance(context);
         connectionManager = new ConnectionManager();
 
+
+
+    }
+
+    void fetchPosts(){
+
+        posts.clear();
+        if(isConnectedToNetwork(context)){
+            posts.addAll(connectionManager.loadPosts());
+
+//            storageManager.savePosts(posts);
+        }
+        else{
+
+            posts.addAll(storageManager.loadPosts());
+        }
+
+
+    }
+
+    void fetchComments(int postId){
+        comments.clear();
+        if(isConnectedToNetwork(context)){
+            comments.addAll(connectionManager.loadComments(postId));
+//            storageManager.saveComments(comments);
+        }
+        else{
+            comments.addAll(storageManager.loadComment(postId));
+        }
 
 
     }

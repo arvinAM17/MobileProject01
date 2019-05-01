@@ -37,7 +37,9 @@ public class MainActivity extends AppCompatActivity implements Observer {
         Button changeView = (Button) findViewById(R.id.change_view);
 
 
-        messageController.posts.addAll(messageController.connectionManager.loadPosts());
+        messageController.fetchPosts();
+//        messageController.posts.addAll(messageController.storageManager.loadPosts());
+        notificationCenter.dataLoaded();
 
 
         mAdapter = new PostAdapter(getApplicationContext(), messageController.posts, messageController);

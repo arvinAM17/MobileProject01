@@ -38,7 +38,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Context con = v.getContext();
-                ArrayList<Comment> c = messageController.connectionManager.loadComments(post.getId());
+                messageController.fetchComments(post.id);
+                ArrayList<Comment> c = messageController.comments;
                 Intent intent = new Intent(con, CommentsActivity.class);
                 intent.putExtra("Id", post.getId());
                 intent.putExtra("Comments", c);
