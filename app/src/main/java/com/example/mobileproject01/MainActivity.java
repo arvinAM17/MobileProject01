@@ -39,12 +39,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
         changeView = (Button) findViewById(R.id.change_view);
 
 
-
         messageController.posts.addAll(messageController.connectionManager.loadPosts());
 
 
-
-        mAdapter = new PostAdapter(getApplicationContext(), messageController.posts,messageController);
+        mAdapter = new PostAdapter(getApplicationContext(), messageController.posts, messageController);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler);
         dividerItem = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
         recyclerView.setAdapter(mAdapter);

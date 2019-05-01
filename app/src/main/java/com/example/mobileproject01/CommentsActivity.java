@@ -40,6 +40,7 @@ public class CommentsActivity extends AppCompatActivity {
             TextView body = new TextView(getApplicationContext());
             body.setText(current.body);
             com.addView(body);
+            com.setOrientation(LinearLayout.VERTICAL);
             this.commentsLayout.addView(com);
         }
 
