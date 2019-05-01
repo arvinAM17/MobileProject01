@@ -65,14 +65,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
             }
         });
 
-//        for (int i = 0; i < messageController.posts.size(); i++) {
-//            recyclerView.getTouchables().get(i).setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v){
-//                    System.out.println("heloooooooo");
-//                }
-//            });
-//        }
 
         notificationCenter.register(MainActivity.this);
 

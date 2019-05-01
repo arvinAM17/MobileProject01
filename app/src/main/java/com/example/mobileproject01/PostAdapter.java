@@ -1,6 +1,7 @@
 package com.example.mobileproject01;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +16,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private Context context;
     MessageController messageController;
 
-    public PostAdapter(Context context, ArrayList<Post> posts , MessageController messageController) {
+    public PostAdapter(Context context, ArrayList<Post> posts, MessageController messageController) {
         this.context = context;
         this.posts = posts;
         this.messageController = messageController;
@@ -36,7 +37,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Comment> c = messageController.connectionManager.loadComments(post.id);
+                Context con = v.getContext();
+                ArrayList<Comment> c = messageController.connectionManager.loadComments(post.getId());
+                Intent intent = new Intent(con, CommentsActivity.class);
+                intent.putExtra("Id", post.getId());
+                intent.putExtra("Comments", c);
+                con.startActivity(intent);
             }
         });
     }
