@@ -1,6 +1,8 @@
 package com.example.mobileproject01;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +37,7 @@ public class CommentsActivity extends AppCompatActivity {
             Comment current = this.comments.get(i);
             TextView postName = new TextView(getApplicationContext());
             postName.setText(current.name);
+            postName.setTextColor(Color.GREEN);
             com.addView(postName);
             TextView body = new TextView(getApplicationContext());
             body.setText(current.body);
